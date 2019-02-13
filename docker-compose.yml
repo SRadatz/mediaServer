@@ -1,0 +1,95 @@
+version: '3'
+
+services:
+  traefik:
+    image: traefik
+    command: --api --docker
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8090:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - C:\Users\sdradatz\Ent\traefik\traefik.toml:/etc/traefik.toml
+      - C:\Users\sdradatz\Ent\traefik\acme.json:/acme.json
+    labels:
+      - "traefik.frontend.rule=Host:traefik"
+    networks:
+      - newNet
+
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    restart: unless-stopped
+    environment:
+      - TZ=America/Detroit
+      - PGID=1001
+      - PUID=1001
+    ports:
+      - "9091:9091"
+      - "51413:51413"
+      - "51413:51413/udp"
+    volumes:
+      - ${MEDIA}:/downloads
+      - ${MEDIA}:/watch
+      - transmission_config:/config
+
+  couchpotato:
+    depends_on:
+       - transmission
+    image: couchpotato/couchpotato
+    container_name: couchpotato
+    restart: unless-stopped
+    volumes:
+      - couchpotato_config:/datadir
+      - ${MEDIA}:/media
+    ports:
+      - "5050:5050"
+
+  sickrage:
+    image: linuxserver/sickrage
+    container_name: sickrage
+    volumes:
+      - C:\Users\sdradatz\Ent\couchpotato\config:/config
+      - C:\Users\sdradatz\Ent\couchpotato\downloads:/downloads
+      - C:\Users\sdradatz\Ent\couchpotato\tv:/tv
+    environment:
+      - TZ=America/Detroit
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+
+  plex:
+    container_name: plex
+    image: plexinc/pms-docker
+    restart: always
+    network_mode: host
+    ports:
+      - "32400:32400"
+      - "1900:1900/udp"
+      - "3005:3005"
+      - "5353:5353/udp"
+      - "8324:8324"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
+    environment:
+#      - PLEX_UID=1000
+#      - PLEX_GID=1000
+      - TZ="America/Detroit"
+      - PLEX_CLAIM=claim-GxYmdrkiByW66p1wZwKs
+      - ADVERTISE_IP="http://192.168.1.76:32400/"
+    volumes:
+      - //c/users/sdradatz/Ent/plex/config:/config
+      - //c/users/sdradatz/Ent/plex/transcode:/transcode
+      - //c/users/sdradatz/Ent/plex/data:/data
+
+volumes:
+    couchpotato_config:
+    transmission_config:
+
+networks:
+  newNet:
+    external: true
