@@ -47,44 +47,44 @@ services:
     ports:
       - "5050:5050"
 
-  sickrage:
-    image: linuxserver/sickrage
-    container_name: sickrage
-    volumes:
-      - C:\Users\sdradatz\Ent\couchpotato\config:/config
-      - C:\Users\sdradatz\Ent\couchpotato\downloads:/downloads
-      - C:\Users\sdradatz\Ent\couchpotato\tv:/tv
-    environment:
-      - TZ=America/Detroit
-    ports:
-      - "8081:8081"
-    restart: unless-stopped
+#  sickrage:
+#    image: linuxserver/sickrage
+#    container_name: sickrage
+#    volumes:
+#      - C:\Users\sdradatz\Ent\couchpotato\config:/config
+#      - C:\Users\sdradatz\Ent\couchpotato\downloads:/downloads
+#      - C:\Users\sdradatz\Ent\couchpotato\tv:/tv
+#    environment:
+#      - TZ=America/Detroit
+#    ports:
+#      - "8081:8081"
+#    restart: unless-stopped
 
-  plex:
-    container_name: plex
-    image: plexinc/pms-docker
-    restart: always
-    network_mode: host
-    ports:
-      - "32400:32400"
-      - "1900:1900/udp"
-      - "3005:3005"
-      - "5353:5353/udp"
-      - "8324:8324"
-      - "32410:32410/udp"
-      - "32412:32412/udp"
-      - "32413:32413/udp"
-      - "32414:32414/udp"
-    environment:
+#  plex:
+#    container_name: plex
+#    image: plexinc/pms-docker
+#    restart: always
+#    network_mode: host
+#    ports:
+#      - "32400:32400"
+#      - "1900:1900/udp"
+#      - "3005:3005"
+#      - "5353:5353/udp"
+#      - "8324:8324"
+#      - "32410:32410/udp"
+#      - "32412:32412/udp"
+#      - "32413:32413/udp"
+#      - "32414:32414/udp"
+#    environment:
 #      - PLEX_UID=1000
 #      - PLEX_GID=1000
-      - TZ="America/Detroit"
-      - PLEX_CLAIM=claim-GxYmdrkiByW66p1wZwKs
-      - ADVERTISE_IP="http://192.168.1.76:32400/"
-    volumes:
-      - //c/users/sdradatz/Ent/plex/config:/config
-      - //c/users/sdradatz/Ent/plex/transcode:/transcode
-      - //c/users/sdradatz/Ent/plex/data:/data
+#      - TZ="America/Detroit"
+#      - PLEX_CLAIM=claim-GxYmdrkiByW66p1wZwKs
+#      - ADVERTISE_IP="http://192.168.1.76:32400/"
+#    volumes:
+#      - //c/users/sdradatz/Ent/plex/config:/config
+#      - //c/users/sdradatz/Ent/plex/transcode:/transcode
+#      - //c/users/sdradatz/Ent/plex/data:/data
 
 volumes:
     couchpotato_config:
