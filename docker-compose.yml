@@ -24,8 +24,8 @@ services:
     restart: unless-stopped
     environment:
       - TZ=America/Detroit
-      - PGID=1001
-      - PUID=1001
+      - PGID=1000
+      - PUID=1000
     ports:
       - "9091:9091"
       - "51413:51413"
@@ -42,8 +42,8 @@ services:
     container_name: couchpotato
     restart: unless-stopped
     environment:
-      - CP_UID=1001
-      - CP_GID=1001
+      - CP_UID=1000
+      - CP_GID=1000
     volumes:
       - ${COUCHCONFIG}:/datadir
       - ${MEDIA}:/media
