@@ -1,22 +1,22 @@
 version: '3'
 
 services:
-  traefik:
-    image: traefik
-    command: --api --docker
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8090:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - C:\Users\sdradatz\Ent\traefik\traefik.toml:/etc/traefik.toml
-      - C:\Users\sdradatz\Ent\traefik\acme.json:/acme.json
-    labels:
-      - "traefik.frontend.rule=Host:traefik"
-    networks:
-      - newNet
+#  traefik:
+#    image: traefik
+#    command: --api --docker
+#    restart: unless-stopped
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#      - "8090:8080"
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - :/etc/traefik.toml
+#      - :/acme.json
+#    labels:
+#      - "traefik.frontend.rule=Host:traefik"
+#    networks:
+#      - newNet
 
   transmission:
     image: linuxserver/transmission
