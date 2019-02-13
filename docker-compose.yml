@@ -16,7 +16,7 @@ services:
 #    labels:
 #      - "traefik.frontend.rule=Host:traefik"
 #    networks:
-#      - newNet
+#      - traefik
 
   transmission:
     image: linuxserver/transmission
@@ -102,7 +102,8 @@ volumes:
     couchpotato_config:
     transmission_config:
     sickrage_config:
+    plex_config:
 
 networks:
-  newNet:
+  traefik:
     external: true
