@@ -41,6 +41,9 @@ services:
     image: couchpotato/couchpotato
     container_name: couchpotato
     restart: unless-stopped
+    environment:
+      - CP_UID=1001
+      - CP_GID=1001
     volumes:
       - ${COUCHCONFIG}:/datadir
       - ${MEDIA}:/media
