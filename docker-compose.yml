@@ -90,7 +90,7 @@ services:
       - PLEX_GID=${GROUP_ID}
       - TZ="America/Detroit"
       - PLEX_CLAIM=claim-GxYmdrkiByW66p1wZwKs
-#      - ADVERTISE_IP="http://192.168.1.66:32400/"
+      - ADVERTISE_IP="http://192.168.1.66:32400/"
       - VERSION=docker
     volumes:
       - plex_config:/config
