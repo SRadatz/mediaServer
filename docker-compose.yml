@@ -53,18 +53,20 @@ services:
     ports:
       - "5050:5050"
 
-#  sickrage:
-#    image: linuxserver/sickrage
-#    container_name: sickrage
-#    volumes:
-#      - C:\Users\sdradatz\Ent\couchpotato\config:/config
-#      - C:\Users\sdradatz\Ent\couchpotato\downloads:/downloads
-#      - C:\Users\sdradatz\Ent\couchpotato\tv:/tv
-#    environment:
-#      - TZ=America/Detroit
-#    ports:
-#      - "8081:8081"
-#    restart: unless-stopped
+  sickrage:
+    image: linuxserver/sickrage
+    container_name: sickrage
+    restart: unless-stopped
+    environment:
+      - PGID=1000
+      - PUID=1000
+      - TZ=America/Detroit
+    volumes:
+      - sickrage_config:/config
+      - ${MEDIA}:/downloads
+      - ${MEDIA}:/tv
+    ports:
+      - "8081:8081"
 
 #  plex:
 #    container_name: plex
@@ -95,6 +97,7 @@ services:
 volumes:
     couchpotato_config:
     transmission_config:
+    sickrage_config:
 
 networks:
   newNet:
