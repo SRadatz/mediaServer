@@ -38,15 +38,18 @@ services:
   couchpotato:
     depends_on:
        - transmission
-    image: couchpotato/couchpotato
+    image: linuxserver/couchpotato
     container_name: couchpotato
     restart: unless-stopped
     environment:
-      - CP_UID=1000
-      - CP_GID=1000
+      - PGID=1000
+      - PUID=1000
+      - TZ=America/Detroit
+      - UMASK_SET=022
     volumes:
-      - ${COUCHCONFIG}:/datadir
-      - ${MEDIA}:/media
+      - ${COUCHCONFIG}:/config
+      - ${MEDIA}:/downloads
+      - ${MEDIA}:/movies
     ports:
       - "5050:5050"
 
