@@ -24,8 +24,8 @@ services:
     restart: unless-stopped
     environment:
       - TZ=America/Detroit
-      - PGID=1000
-      - PUID=1000
+      - PGID=${GROUP_ID}
+      - PUID=${USER_ID}
     ports:
       - "9091:9091"
       - "51413:51413"
@@ -42,8 +42,8 @@ services:
     container_name: couchpotato
     restart: unless-stopped
     environment:
-      - PGID=1000
-      - PUID=1000
+      - PGID=${GROUP_ID}
+      - PUID=${USER_ID}
       - TZ=America/Detroit
       - UMASK_SET=022
     volumes:
@@ -54,12 +54,14 @@ services:
       - "5050:5050"
 
   sickrage:
+    depends_on:
+      - transmission
     image: linuxserver/sickrage
     container_name: sickrage
     restart: unless-stopped
     environment:
-      - PGID=1000
-      - PUID=1000
+      - PGID=${GROUP_ID}
+      - PUID=${USER_ID}
       - TZ=America/Detroit
     volumes:
       - sickrage_config:/config
@@ -68,11 +70,11 @@ services:
     ports:
       - "8081:8081"
 
-#  plex:
-#    container_name: plex
-#    image: plexinc/pms-docker
-#    restart: always
-#    network_mode: host
+  plex:
+    container_name: plex
+    image: plexinc/pms-docker
+    restart: always
+    network_mode: host
 #    ports:
 #      - "32400:32400"
 #      - "1900:1900/udp"
@@ -83,16 +85,18 @@ services:
 #      - "32412:32412/udp"
 #      - "32413:32413/udp"
 #      - "32414:32414/udp"
-#    environment:
-#      - PLEX_UID=1000
-#      - PLEX_GID=1000
-#      - TZ="America/Detroit"
-#      - PLEX_CLAIM=claim-GxYmdrkiByW66p1wZwKs
-#      - ADVERTISE_IP="http://192.168.1.76:32400/"
-#    volumes:
-#      - //c/users/sdradatz/Ent/plex/config:/config
-#      - //c/users/sdradatz/Ent/plex/transcode:/transcode
-#      - //c/users/sdradatz/Ent/plex/data:/data
+    environment:
+      - PLEX_UID=${USER_ID}
+      - PLEX_GID=${GROUP_ID}
+      - TZ="America/Detroit"
+      - PLEX_CLAIM=claim-GxYmdrkiByW66p1wZwKs
+      - ADVERTISE_IP="http://192.168.1.66:32400/"
+      - VERSION=docker
+    volumes:
+      - plex_config:/config
+      - ${MEDIA}:/data/tvshows
+      - ${MEDIA}:/data/movies
+      - ${TEMP}:/transcode
 
 volumes:
     couchpotato_config:
