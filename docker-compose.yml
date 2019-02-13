@@ -42,7 +42,7 @@ services:
     container_name: couchpotato
     restart: unless-stopped
     volumes:
-      - couchpotato_config:/datadir
+      - ${COUCHCONFIG}:/datadir
       - ${MEDIA}:/media
     ports:
       - "5050:5050"
